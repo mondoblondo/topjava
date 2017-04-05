@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -30,9 +31,9 @@ public class MealServlet extends HttpServlet {
         req.setAttribute("meals", MealsUtil
                 .getFilteredWithExceeded(
                         MealMock.getMeals(),
-                        LocalDateTime.of(2015, 5, 30, 1, 0).toLocalTime(),
-                        LocalDateTime.of(2015, 5, 31, 23, 59).toLocalTime(),
-                        2000));
+                        LocalTime.MIN,
+                        LocalTime.MAX,
+                        MealMock.DEFAULT_CALORIES));
 
         req.getRequestDispatcher("meals.jsp").forward(req, resp);
     }
