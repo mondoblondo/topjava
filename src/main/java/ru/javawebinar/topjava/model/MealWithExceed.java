@@ -2,12 +2,15 @@ package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 /**
  * GKislin
  * 11.01.2015.
  */
 public class MealWithExceed {
+    private final UUID id;
+
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -16,7 +19,12 @@ public class MealWithExceed {
 
     private final boolean exceed;
 
-    public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
+    public MealWithExceed(UUID id,
+                          LocalDateTime dateTime,
+                          String description,
+                          int calories,
+                          boolean exceed) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -49,5 +57,9 @@ public class MealWithExceed {
 
     public boolean isExceed() {
         return exceed;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

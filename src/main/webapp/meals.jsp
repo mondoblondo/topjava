@@ -33,6 +33,7 @@
         <td><%= meal.getDescription()%></td>
         <td>${meal.calories}</td>
         <td>${meal.exceed}</td>
+        <td>${meal.id}</td>
     </tr>
 </c:forEach>
     </table>
