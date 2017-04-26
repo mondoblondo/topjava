@@ -17,6 +17,7 @@
 
 <h2><a href="index.html">Home</a></h2>
 <h2>Meal list</h2>
+<a href="meals?action=create">Add meal</a>
 <table>
     <tr>
         <td>Время</td>
@@ -34,9 +35,15 @@
         <td>${meal.calories}</td>
         <td>${meal.exceed}</td>
         <td>${meal.id}</td>
+
+        <td>
+            <a href="meals?action=edit&id=${meal.id}">Edit</a>
+            <a href="meals?action=delete&id=${meal.id}">Delete</a>
+        </td>
     </tr>
 </c:forEach>
     </table>
+
 
 </body>
 </html>
