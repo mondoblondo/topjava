@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +50,18 @@ public class MealServlet extends HttpServlet {
                                 LocalTime.MIN,
                                 LocalTime.MAX,
                                 InMemoryMealRepository.DEFAULT_CALORIES));
-                resp.sendRedirect("/meals.jsp");
+                resp.sendRedirect("/meals");
+                LOG.debug("deleted meal in case delete");
+                break;
+            }
+            case "create": {
+                Meal meal = new Meal(
+                        LocalDateTime.now(),
+                        "",
+                        1000
+                );
+                req.setAttribute("meal", meal);
+                req.getRequestDispatcher("mealEdit.jsp").forward(req, resp);
                 break;
             }
             default:
@@ -60,11 +72,25 @@ public class MealServlet extends HttpServlet {
                                 LocalTime.MAX,
                                 InMemoryMealRepository.DEFAULT_CALORIES));
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
+                LOG.debug("default action in doGet");
 
         }
     }
     private UUID getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return UUID.fromString(paramId);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        Meal meal = new Meal(
+                LocalDateTime.parse(req.getParameter("dateTime")),
+                req.getParameter("description"),
+                Integer.valueOf(req.getParameter("calories"))
+        );
+        repository.save(meal);
+        LOG.debug("saved new meal" + meal.getDescription());
+        resp.sendRedirect("/meals");
     }
 }
